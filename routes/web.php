@@ -24,3 +24,5 @@ Route::post('/subscribe_cancel', 'HomeController@subscribe_cancel');
 
 //connect
 Route::get('/connect','HomeController@connect');
+Route::get('connectcharge','ChargeController@connectcharge');
+Route::post('onecharge','ChargeController@onecharge');
