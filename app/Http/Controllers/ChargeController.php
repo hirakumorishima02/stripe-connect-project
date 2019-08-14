@@ -67,4 +67,17 @@ class ChargeController extends Controller
             return $ex->getMessage();
         }
     }
+    public function eventget(Request $request){//購入先ユーザーのdestinationを指定しなければいけない
+
+           Stripe::setApiKey(env('STRIPE_SECRET'));
+           $result = $request["data"]["object"]["lines"]["data"][0]["metadata"]["destination"];
+
+         \Stripe\Transfer::create(array(
+           "amount" => 200,
+           "currency" => "jpy",
+           "destination" => $result,
+           "transfer_group" => "{ORDER10}",
+           "metadata" => array("destination" => "6735")
+         ));
+    }
 }

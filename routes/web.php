@@ -26,3 +26,10 @@ Route::post('/subscribe_cancel', 'HomeController@subscribe_cancel');
 Route::get('/connect','HomeController@connect');
 Route::get('connectcharge','ChargeController@connectcharge');
 Route::post('onecharge','ChargeController@onecharge');
+
+
+// connect subscription
+Route::get('/connectsubscription', 'HomeController@connect_subscription');
+Route::post('/subscribe_connect', 'HomeController@subscribe_connect');
+// webhock
+Route::post('/eventget', 'ChargeController@eventget');

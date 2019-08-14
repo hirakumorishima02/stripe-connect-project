@@ -99,4 +99,28 @@ class HomeController extends Controller
              return view('connect')->with('url',$url);
            }
     }
+    public function connect_subscription(){
+        $user = User::all()->where('stripe_user_id', '!==', "");
+        return view('connectsubscription')->with('user',$user);
+    }
+
+    public function subscribe_connect(Request $request)
+    {
+        try {
+            Stripe::setApiKey(env('STRIPE_SECRET'));
+            $id = Auth::id();//user_id取得
+            $user = User::find($id);
+
+            $iddata = $request->iddata;//投稿者のid
+            $postuser = User::find($iddata);
+            $acct = $postuser->stripe_user_id;
+
+            $user->newSubscription('main', 'plan_FbjLxUIWL3H5Y8')->withMetadata(["destination" => $acct])->create($request->stripeToken);
+
+            return back();
+        } catch (\Exception $ex) {
+            return $ex->getMessage();
+        }
+
+    }
 }
